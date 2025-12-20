@@ -1,0 +1,168 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+// 研究团队成员
+const teamMembers = [
+  {
+    name: '张三',
+    role: '项目负责人',
+    avatar: '🎓',
+    description: '负责项目整体规划与协调',
+  },
+  {
+    name: '李四',
+    role: '数据分析',
+    avatar: '📊',
+    description: '负责地理数据收集与分析',
+  },
+  {
+    name: '王五',
+    role: '技术开发',
+    avatar: '💻',
+    description: '负责网站开发与维护',
+  },
+  {
+    name: '赵六',
+    role: '内容编辑',
+    avatar: '✍️',
+    description: '负责研究内容撰写与编辑',
+  },
+];
+
+// 指导老师
+const advisors = [
+  {
+    name: '陈老师',
+    title: '指导教师',
+    institution: '海南中学',
+  },
+];
+---
+
+<Layout title="关于研究">
+  <div class="flex min-h-screen">
+    <Sidebar />
+    
+    <main class="flex-1 ml-64 p-8 overflow-y-auto">
+      <div class="max-w-4xl mx-auto">
+        <!-- 页面标题 -->
+        <header class="mb-12 text-center">
+          <h1 class="text-4xl font-bold text-neutral-14">关于研究</h1>
+          <p class="mt-4 text-lg text-neutral-10">海甸岛时间地图研究项目</p>
+        </header>
+
+        <!-- 项目介绍 -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">项目介绍</h2>
+          <div class="bg-primary-1 rounded-xl p-6">
+            <p class="text-neutral-12 leading-relaxed">
+              「Island Maps - 海甸岛时间地图」是一项研究性学习项目，旨在通过数字化手段记录和展示海甸岛近二十年来的发展变迁。
+            </p>
+            <p class="text-neutral-12 leading-relaxed mt-4">
+              我们收集整理了不同年份的地图数据，对重要地点进行了深入研究，希望通过这个平台让更多人了解海甸岛的历史与发展。
+            </p>
+          </div>
+        </section>
+
+        <!-- 研究目标 -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">研究目标</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white rounded-xl p-6 border border-neutral-3">
+              <div class="w-12 h-12 bg-primary-2 rounded-lg flex items-center justify-center text-2xl mb-4">
+                🗺️
+              </div>
+              <h3 class="font-semibold text-neutral-14 mb-2">时空记录</h3>
+              <p class="text-sm text-neutral-10">记录海甸岛不同时期的空间形态变化</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-neutral-3">
+              <div class="w-12 h-12 bg-success-2 rounded-lg flex items-center justify-center text-2xl mb-4">
+                📚
+              </div>
+              <h3 class="font-semibold text-neutral-14 mb-2">深度研究</h3>
+              <p class="text-sm text-neutral-10">对重要地点进行专题研究分析</p>
+            </div>
+            <div class="bg-white rounded-xl p-6 border border-neutral-3">
+              <div class="w-12 h-12 bg-info-2 rounded-lg flex items-center justify-center text-2xl mb-4">
+                🌐
+              </div>
+              <h3 class="font-semibold text-neutral-14 mb-2">知识共享</h3>
+              <p class="text-sm text-neutral-10">通过网络平台分享研究成果</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 研究团队 -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">研究团队</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {teamMembers.map((member) => (
+              <div class="flex items-center gap-4 bg-white rounded-xl p-4 border border-neutral-3">
+                <div class="w-14 h-14 bg-neutral-2 rounded-full flex items-center justify-center text-2xl">
+                  {member.avatar}
+                </div>
+                <div>
+                  <h3 class="font-semibold text-neutral-14">{member.name}</h3>
+                  <p class="text-sm text-primary-6">{member.role}</p>
+                  <p class="text-xs text-neutral-10 mt-1">{member.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- 指导老师 -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">指导老师</h2>
+          <div class="bg-white rounded-xl p-6 border border-neutral-3">
+            {advisors.map((advisor) => (
+              <div class="flex items-center gap-4">
+                <div class="w-16 h-16 bg-primary-2 rounded-full flex items-center justify-center text-3xl">
+                  👨‍🏫
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold text-neutral-14">{advisor.name}</h3>
+                  <p class="text-primary-6">{advisor.title}</p>
+                  <p class="text-sm text-neutral-10">{advisor.institution}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <!-- 致谢 -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">致谢</h2>
+          <div class="bg-neutral-2 rounded-xl p-6">
+            <p class="text-neutral-12">
+              感谢所有为本项目提供帮助的老师、同学和社区居民。特别感谢：
+            </p>
+            <ul class="mt-4 space-y-2 text-neutral-10">
+              <li>• 海南省测绘地理信息局 - 提供历史地图数据支持</li>
+              <li>• 海甸岛街道办事处 - 协助实地调研工作</li>
+              <li>• 海南大学图书馆 - 提供文献资料查阅</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 联系方式 -->
+        <section>
+          <h2 class="text-2xl font-semibold text-neutral-14 mb-4">联系我们</h2>
+          <div class="bg-white rounded-xl p-6 border border-neutral-3">
+            <p class="text-neutral-12">
+              如果您对我们的研究有任何建议或想要参与合作，欢迎联系我们：
+            </p>
+            <div class="mt-4 flex items-center gap-2 text-primary-6">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <span>contact@islandmaps.example.com</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import Layout from './Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <div class="flex min-h-screen">
+    <Sidebar />
+    <main class="flex-1 ml-64 p-page">
+      <article class="max-w-4xl mx-auto prose prose-neutral">
+        <slot />
+      </article>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .prose {
+    --tw-prose-body: var(--text-text-normal-text-black);
+    --tw-prose-headings: var(--text-text-normal-title-black);
+    --tw-prose-links: var(--primary-6);
+  }
+</style>

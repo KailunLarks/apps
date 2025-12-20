@@ -1,0 +1,145 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "marker-001",
+      "type": "Feature",
+      "properties": {
+        "name": "海甸溪",
+        "researchId": "haidian-creek",
+        "description": "海甸溪沿岸区域",
+        "icon": "stream.svg",
+        "timeRange": [
+          2000,
+          2024
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.31691203641071,
+          20.052276003359268
+        ]
+      }
+    },
+    {
+      "id": "marker-002",
+      "type": "Feature",
+      "properties": {
+        "name": "白沙门公园",
+        "researchId": "baishamen-park",
+        "description": "白沙门休闲区",
+        "icon": "park.svg",
+        "timeRange": [
+          2008,
+          2024
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.33096888282029,
+          20.073652728611123
+        ]
+      }
+    },
+    {
+      "id": "marker-003",
+      "type": "Feature",
+      "properties": {
+        "name": "世纪大桥",
+        "researchId": "century-bridge",
+        "description": "连接海甸岛与主城区",
+        "icon": "bridge.svg",
+        "timeRange": [
+          2003,
+          2024
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.31537083013438,
+          20.053116430001737
+        ]
+      }
+    },
+    {
+      "id": "marker-004",
+      "type": "Feature",
+      "properties": {
+        "name": "海南大学",
+        "researchId": "hainan-university",
+        "description": "海南大学校园",
+        "icon": "HNU.svg",
+        "timeRange": [
+          1983,
+          2024
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.32204312753652,
+          20.058427689515312
+        ]
+      }
+    },
+    {
+      "id": "island",
+      "type": "Feature",
+      "properties": {
+        "name": "海甸岛",
+        "researchId": "haidian-island",
+        "description": "海甸岛整体范围",
+        "icon": "island.svg",
+        "timeRange": [
+          1995,
+          2024
+        ]
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          110.32611149298248,
+          20.069415642671828
+        ]
+      }
+    },
+    {
+      "id": "bridge-renmin",
+      "type": "Feature",
+      "properties": {
+        "name": "人民桥",
+        "type": "bridge",
+        "description": "连接海甸岛与主城区的桥梁",
+        "icon": "bridge.svg",
+        "researchId": "renmin-bridge"
+      },
+      "geometry": {
+        "coordinates": [
+          110.33859877465414,
+          20.047922244209104
+        ],
+        "type": "Point"
+      }
+    },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "和平桥",
+            "type": "bridge",
+            "description": "连接海甸岛与主城区的桥梁",
+            "icon": "bridge.svg",
+            "researchId": "heping-bridge"
+        },
+        "geometry": {
+          "coordinates": [
+            110.34910423170089,
+            20.049698860332043
+          ],
+          "type": "Point"
+        }
+      }
+    ]
+  }

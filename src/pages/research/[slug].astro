@@ -1,0 +1,255 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { marked } from 'marked';
+
+// 获取动态路由参数
+const { slug } = Astro.params;
+
+// 模拟研究详情数据
+const researchData: Record<string, {
+  title: string;
+  location: string;
+  date: string;
+  tags: string[];
+  content: string;
+}> = {
+  'haidian-creek': {
+    title: '海甸溪变迁',
+    location: '海甸溪沿岸',
+    date: '2024-12-01',
+    tags: ['水文', '生态'],
+    content: `
+## 研究背景
+
+海甸溪是海甸岛的重要水系，连接南渡江与琼州海峡。近二十年来，随着城市发展，海甸溪经历了显著的变化。
+
+## 研究方法
+
+1. **历史图像对比**：收集2000年至2024年的卫星图像进行对比分析
+2. **实地调研**：走访沿岸居民，记录变化过程
+3. **水质监测**：采集水样进行水质分析
+
+## 主要发现
+
+### 河道形态变化
+
+通过对比不同时期的卫星图像，我们发现：
+
+- 2000-2010年：河道自然蜿蜒，两岸多为滩涂湿地
+- 2010-2015年：开始进行河道整治，部分区域硬化
+- 2015-2024年：生态修复工程启动，恢复部分湿地功能
+
+### 生态恢复成效
+
+经过多年的治理和修复，海甸溪的生态环境明显改善：
+
+- 水质从劣V类提升至IV类
+- 鸟类种类从12种增加到28种
+- 两岸绿化覆盖率提升40%
+
+## 结论与建议
+
+海甸溪的变迁反映了城市发展与生态保护的博弈。建议：
+
+1. 继续推进生态修复工程
+2. 建立长期监测机制
+3. 加强公众环保意识教育
+    `
+  },
+  'baishamen-park': {
+    title: '白沙门公园',
+    location: '白沙门区域',
+    date: '2024-11-15',
+    tags: ['城市化', '休闲'],
+    content: `
+## 研究背景
+
+白沙门公园位于海甸岛北部，是海口市重要的城市休闲空间。本研究追溯其从滩涂到公园的演变历程。
+
+## 历史沿革
+
+- **1990年代以前**：白沙门区域主要为滩涂和渔村
+- **2000年代**：开始规划建设公园
+- **2008年**：白沙门公园正式对外开放
+- **2015年至今**：持续扩建和功能完善
+
+## 空间功能分析
+
+公园现有功能区：
+
+1. 儿童游乐区
+2. 海滨休闲区
+3. 生态湿地区
+4. 运动健身区
+
+## 社会影响
+
+公园的建成对周边社区产生了深远影响：
+
+- 房价平均上涨35%
+- 日均游客量超过5000人次
+- 成为市民休闲首选地
+    `
+  },
+  'century-bridge': {
+    title: '世纪大桥建设',
+    location: '世纪大桥',
+    date: '2024-10-20',
+    tags: ['交通', '基建'],
+    content: `
+## 研究背景
+
+世纪大桥是连接海甸岛与海口主城区的重要通道，于2003年8月通车。
+
+## 建设历程
+
+- **1998年**：项目立项
+- **2000年**：正式开工建设
+- **2003年**：建成通车
+
+## 技术参数
+
+- 全长：2663米
+- 主跨：340米
+- 设计时速：60公里/小时
+- 日通行能力：10万辆次
+
+## 交通影响分析
+
+大桥通车后对海甸岛交通格局产生重大影响：
+
+### 正面影响
+
+1. 通勤时间缩短约40%
+2. 物流成本降低
+3. 促进岛内经济发展
+
+### 挑战
+
+1. 高峰期拥堵问题
+2. 对老城区交通压力增加
+
+## 发展建议
+
+1. 优化公交线路布局
+2. 推广绿色出行方式
+3. 研究新增跨海通道可行性
+    `
+  },
+  'hainan-university': {
+    title: '海南大学发展',
+    location: '海南大学',
+    date: '2024-09-10',
+    tags: ['教育', '社区'],
+    content: `
+## 研究背景
+
+海南大学是海南省唯一的"211工程"重点建设高校，其发展对海甸岛产生了深远影响。
+
+## 校园扩张历程
+
+- **1983年**：海南大学成立
+- **2007年**：与原华南热带农业大学合并
+- **2017年**：入选"双一流"建设高校
+
+## 与周边社区的互动
+
+### 经济带动
+
+1. 催生大量商业配套
+2. 创造就业机会
+3. 提升区域房产价值
+
+### 文化影响
+
+1. 提升区域文化氛围
+2. 举办各类公益活动
+3. 促进人才交流
+
+## 未来展望
+
+随着海南自贸港建设，海南大学将迎来新的发展机遇。
+    `
+  }
+};
+
+// 获取当前研究数据
+const research = slug ? researchData[slug] : null;
+
+// 解析 Markdown 内容
+const htmlContent = research ? marked.parse(research.content) : '';
+
+// 生成静态路由
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'haidian-creek' } },
+    { params: { slug: 'baishamen-park' } },
+    { params: { slug: 'century-bridge' } },
+    { params: { slug: 'hainan-university' } },
+  ];
+}
+---
+
+<Layout title={research?.title || '研究详情'}>
+  <div class="flex min-h-screen">
+    <Sidebar />
+    
+    <main class="flex-1 ml-64 p-8 overflow-y-auto">
+      {research ? (
+        <article class="max-w-4xl mx-auto">
+          <!-- 返回链接 -->
+          <a href="/research" class="inline-flex items-center gap-2 text-neutral-10 hover:text-primary-6 mb-6">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            返回研究列表
+          </a>
+
+          <!-- 文章头部 -->
+          <header class="mb-8 pb-8 border-b border-neutral-3">
+            <h1 class="text-4xl font-bold text-neutral-14">{research.title}</h1>
+            
+            <div class="flex items-center gap-4 mt-4">
+              <div class="flex items-center gap-1 text-neutral-10">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>{research.location}</span>
+              </div>
+              
+              <div class="flex items-center gap-1 text-neutral-10">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                <span>{research.date}</span>
+              </div>
+              
+              <div class="flex gap-2">
+                {research.tags.map((tag) => (
+                  <span class="px-2 py-0.5 text-xs bg-primary-2 text-primary-8 rounded-full">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </header>
+
+          <!-- 文章内容 -->
+          <div class="prose" set:html={htmlContent} />
+        </article>
+      ) : (
+        <div class="text-center py-16">
+          <h1 class="text-2xl text-neutral-10">研究内容未找到</h1>
+          <a href="/research" class="mt-4 inline-block text-primary-6 hover:text-primary-8">
+            返回研究列表
+          </a>
+        </div>
+      )}
+    </main>
+  </div>
+</Layout>

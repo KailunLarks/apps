@@ -1,0 +1,157 @@
+---
+import { Map, BookOpen, Users, Clock, Layers } from 'lucide-react';
+
+const navItems = [
+  { href: '/', label: '时间地图', icon: 'map' },
+  { href: '/research', label: '研究展示', icon: 'book' },
+  { href: '/about', label: '关于研究', icon: 'users' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<aside id="sidebar" class="sidebar fixed left-0 top-0 h-full w-64 bg-neutral-1 border-r border-neutral-2 flex flex-col z-50 transition-all duration-300">
+  <!-- Toggle Button -->
+  <button
+    id="sidebar-toggle"
+    class="absolute -right-3 top-6 w-6 h-6 bg-neutral-1 border border-neutral-3 rounded-full flex items-center justify-center cursor-pointer hover:bg-neutral-3 transition-colors z-10 shadow-sm"
+    aria-label="切换侧栏"
+  >
+    <svg id="toggle-icon" class="w-4 h-4 text-neutral-12 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+  </button>
+
+  <!-- Logo -->
+  <div class="p-chapter border-b border-neutral-3">
+    <a href="/" class="flex items-center gap-content">
+      <div class="w-10 h-10 rounded-lg bg-primary-6 flex items-center justify-center shrink-0">
+        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <div class="sidebar-text overflow-hidden transition-all duration-300">
+        <h1 class="text-middle font-semibold text-neutral-14 whitespace-nowrap">Island Maps</h1>
+        <p class="text-tiny text-neutral-10 whitespace-nowrap">海甸岛研究</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 p-content">
+    <ul class="space-y-inside-space">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href || 
+          (item.href !== '/' && currentPath.startsWith(item.href));
+        return (
+          <li>
+            <a
+              href={item.href}
+              class:list={[
+                'flex items-center gap-content px-content py-component rounded-md transition-colors',
+                isActive 
+                  ? 'bg-primary-2 text-primary-8' 
+                  : 'text-neutral-12 hover:bg-neutral-3 hover:text-neutral-14'
+              ]}
+              title={item.label}
+            >
+              <span class="w-5 h-5 shrink-0">
+                {item.icon === 'map' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
+                    <path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z" />
+                    <path d="M8 2v16" />
+                    <path d="M16 6v16" />
+                  </svg>
+                )}
+                {item.icon === 'book' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg>
+                )}
+                {item.icon === 'users' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                )}
+              </span>
+              <span class="sidebar-text text-regular overflow-hidden transition-all duration-300 whitespace-nowrap">{item.label}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+
+
+</aside>
+
+<style>
+  .sidebar.collapsed {
+    width: 4.5rem;
+  }
+  
+  .sidebar.collapsed .sidebar-text {
+    width: 0;
+    opacity: 0;
+  }
+  
+  .sidebar:not(.collapsed) .sidebar-text {
+    width: auto;
+    opacity: 1;
+  }
+  
+  .sidebar.collapsed #toggle-icon {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  function initSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle');
+    const mainContent = document.querySelector('main');
+    
+    if (!sidebar || !toggleBtn) return;
+    
+    // 从 localStorage 恢复状态
+    const isCollapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+    if (isCollapsed) {
+      sidebar.classList.add('collapsed');
+      if (mainContent) {
+        mainContent.classList.remove('ml-64');
+        mainContent.classList.add('ml-[4.5rem]');
+      }
+    }
+    
+    toggleBtn.addEventListener('click', () => {
+      const willCollapse = !sidebar.classList.contains('collapsed');
+      sidebar.classList.toggle('collapsed');
+      
+      // 更新 main 区域的 margin
+      if (mainContent) {
+        if (willCollapse) {
+          mainContent.classList.remove('ml-64');
+          mainContent.classList.add('ml-[4.5rem]');
+        } else {
+          mainContent.classList.remove('ml-[4.5rem]');
+          mainContent.classList.add('ml-64');
+        }
+      }
+      
+      // 保存状态到 localStorage
+      localStorage.setItem('sidebar-collapsed', willCollapse.toString());
+    });
+  }
+  
+  // 初始化
+  initSidebar();
+  
+  // 支持 Astro View Transitions
+  document.addEventListener('astro:after-swap', initSidebar);
+</script>

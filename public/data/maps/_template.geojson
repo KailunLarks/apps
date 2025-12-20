@@ -1,0 +1,257 @@
+{
+  "type": "FeatureCollection",
+  "name": "海甸岛地图模板",
+  "description": "使用此模板作为参考，按照 type 属性分类绘制地图要素",
+  "features": [
+    {
+      "_comment": "============ 1. 陆地轮廓 (type: land) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "land-main",
+        "name": "海甸岛主岛",
+        "type": "land",
+        "description": "岛屿的主要轮廓边界"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.2850, 20.0380],
+          [110.2900, 20.0350],
+          [110.3100, 20.0340],
+          [110.3300, 20.0360],
+          [110.3450, 20.0420],
+          [110.3500, 20.0500],
+          [110.3480, 20.0600],
+          [110.3400, 20.0680],
+          [110.3200, 20.0700],
+          [110.3000, 20.0680],
+          [110.2850, 20.0600],
+          [110.2800, 20.0500],
+          [110.2850, 20.0380]
+        ]]
+      }
+    },
+
+    {
+      "_comment": "============ 2. 水系 (type: water/river) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "water-haidianxi",
+        "name": "海甸溪",
+        "type": "water",
+        "description": "岛南侧的主要河流"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.2850, 20.0400],
+          [110.3200, 20.0380],
+          [110.3250, 20.0400],
+          [110.3200, 20.0420],
+          [110.2850, 20.0440],
+          [110.2850, 20.0400]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "water-lake-01",
+        "name": "内湖",
+        "type": "water",
+        "description": "示例：岛内小型水体"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3150, 20.0550],
+          [110.3180, 20.0550],
+          [110.3180, 20.0570],
+          [110.3150, 20.0570],
+          [110.3150, 20.0550]
+        ]]
+      }
+    },
+
+    {
+      "_comment": "============ 3. 绿地/公园 (type: park/greenspace) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "park-baishamen",
+        "name": "白沙门公园",
+        "type": "park",
+        "researchId": "baishamen-park",
+        "description": "岛北部的大型公园"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3250, 20.0620],
+          [110.3350, 20.0620],
+          [110.3380, 20.0680],
+          [110.3280, 20.0690],
+          [110.3250, 20.0620]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "greenspace-01",
+        "name": "街心公园",
+        "type": "greenspace",
+        "description": "示例：小型绿地"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3050, 20.0520],
+          [110.3080, 20.0520],
+          [110.3080, 20.0540],
+          [110.3050, 20.0540],
+          [110.3050, 20.0520]
+        ]]
+      }
+    },
+
+    {
+      "_comment": "============ 4. 道路 (type: road/street) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "road-main-ew",
+        "name": "人民大道",
+        "type": "road",
+        "roadClass": "main",
+        "description": "东西向主干道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.2850, 20.0500],
+          [110.3000, 20.0500],
+          [110.3200, 20.0500],
+          [110.3400, 20.0500],
+          [110.3480, 20.0500]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "road-main-ns",
+        "name": "海甸路",
+        "type": "road",
+        "roadClass": "main",
+        "description": "南北向主干道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.3150, 20.0380],
+          [110.3150, 20.0500],
+          [110.3150, 20.0600],
+          [110.3150, 20.0680]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "street-01",
+        "name": "小巷",
+        "type": "street",
+        "roadClass": "minor",
+        "description": "示例：次要道路"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.3100, 20.0520],
+          [110.3100, 20.0560]
+        ]
+      }
+    },
+
+    {
+      "_comment": "============ 5. 建筑物 (type: building) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "building-hnu",
+        "name": "海南大学",
+        "type": "building",
+        "researchId": "hainan-university",
+        "buildingType": "education",
+        "description": "海南大学主校区"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3100, 20.0480],
+          [110.3200, 20.0480],
+          [110.3200, 20.0550],
+          [110.3100, 20.0550],
+          [110.3100, 20.0480]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "building-hospital",
+        "name": "医院",
+        "type": "building",
+        "buildingType": "medical",
+        "description": "示例：医疗建筑"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3000, 20.0450],
+          [110.3030, 20.0450],
+          [110.3030, 20.0470],
+          [110.3000, 20.0470],
+          [110.3000, 20.0450]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "building-residential-01",
+        "name": "住宅区A",
+        "type": "building",
+        "buildingType": "residential",
+        "description": "示例：居民区"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [110.3220, 20.0520],
+          [110.3260, 20.0520],
+          [110.3260, 20.0550],
+          [110.3220, 20.0550],
+          [110.3220, 20.0520]
+        ]]
+      }
+    },
+
+    {
+      "_comment": "============ 6. 桥梁 (type: bridge) ============",
+      "type": "Feature",
+      "properties": {
+        "id": "bridge-century",
+        "name": "世纪大桥",
+        "type": "bridge",
+        "researchId": "century-bridge",
+        "description": "连接海甸岛与主城区"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.3050, 20.0350],
+          [110.3050, 20.0280]
+        ]
+      }
+    }
+  ]
+}

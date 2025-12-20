@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  fullscreen?: boolean; // 地图页面使用全屏模式
+}
+
+const { 
+  title, 
+  description = '海甸岛地图研究项目 - 探索时间与空间的变迁',
+  fullscreen = false 
+} = Astro.props;
+
+const bodyClass = fullscreen 
+  ? 'h-full overflow-hidden bg-neutral-1' 
+  : 'min-h-full bg-neutral-1';
+---
+
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Island Maps</title>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* 确保地图容器可以全屏 */
+  #map-container {
+    width: 100%;
+    height: 100vh;
+  }
+</style>

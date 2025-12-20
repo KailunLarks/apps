@@ -1,0 +1,427 @@
+@import "tailwindcss";
+
+/* 导入设计系统变量 */
+@import "./variables.css";
+
+/* 自定义 Tailwind 主题扩展 */
+@theme {
+  /* Primary Colors */
+  --color-primary-1: var(--primary-1);
+  --color-primary-2: var(--primary-2);
+  --color-primary-3: var(--primary-3);
+  --color-primary-4: var(--primary-4);
+  --color-primary-5: var(--primary-5);
+  --color-primary-6: var(--primary-6);
+  --color-primary-7: var(--primary-7);
+  --color-primary-8: var(--primary-8);
+  --color-primary-9: var(--primary-9);
+  --color-primary-10: var(--primary-10);
+
+  /* Success Colors */
+  --color-success-1: var(--success-1);
+  --color-success-2: var(--success-2);
+  --color-success-6: var(--success-6);
+  --color-success-8: var(--success-8);
+
+  /* Error Colors */
+  --color-error-1: var(--error-1);
+  --color-error-2: var(--error-2);
+  --color-error-6: var(--error-6);
+  --color-error-8: var(--error-8);
+
+  /* Warning Colors */
+  --color-warning-1: var(--warning-1);
+  --color-warning-2: var(--warning-2);
+  --color-warning-6: var(--warning-6);
+  --color-warning-8: var(--warning-8);
+
+  /* Info Colors */
+  --color-info-1: var(--info-1);
+  --color-info-2: var(--info-2);
+  --color-info-6: var(--info-6);
+  --color-info-8: var(--info-8);
+
+  /* Neutral Colors */
+  --color-neutral-1: var(--neutral-1);
+  --color-neutral-2: var(--neutral-2);
+  --color-neutral-3: var(--neutral-3);
+  --color-neutral-4: var(--neutral-4);
+  --color-neutral-6: var(--neutral-6);
+  --color-neutral-10: var(--neutral-10);
+  --color-neutral-12: var(--neutral-12);
+  --color-neutral-14: var(--neutral-14);
+  --color-neutral-16: var(--neutral-16);
+  --color-neutral-18: var(--neutral-18);
+
+  /* Font Sizes */
+  --font-size-tiny: var(--size-size-tiny);
+  --font-size-small: var(--size-size-small);
+  --font-size-regular: var(--size-size-regular);
+  --font-size-middle: var(--size-size-middle);
+  --font-size-big: var(--size-size-big);
+  --font-size-large: var(--size-size-large);
+  --font-size-huge: var(--size-size-huge);
+
+  /* Border Radius */
+  --radius-none: var(--border-radius-border-radius-none);
+  --radius-sm: var(--border-radius-border-radius-extra-small-2);
+  --radius-md: var(--border-radius-border-radius-small);
+  --radius-lg: var(--border-radius-border-radius-middle);
+  --radius-xl: var(--border-radius-border-radius-big);
+  --radius-2xl: var(--border-radius-border-radius-large);
+  --radius-full: var(--border-radius-border-radius-allround);
+
+  /* Spacing */
+  --spacing-none: var(--gap-gap-none);
+  --spacing-inside: var(--gap-gap-inside);
+  --spacing-inside-space: var(--gap-gap-inside-space);
+  --spacing-component: var(--gap-gap-component-space);
+  --spacing-content: var(--gap-gap-content-space);
+  --spacing-block: var(--gap-gap-block-space);
+  --spacing-chapter: var(--gap-gap-chapter-space);
+  --spacing-page: var(--gap-gap-page-space);
+}
+
+/* 全局样式 */
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--neutral-1);
+  color: var(--text-text-normal-text-black);
+  line-height: 1.6;
+}
+
+/* MapLibre Popup 动画
+ * 注意：MapLibre 会在 .maplibregl-popup 上写 transform: translate(...) 来做定位，
+ * 所以我们不能在 .maplibregl-popup 上使用 transform 动画。
+ * 
+ * 解决方案：使用 CSS scale 属性（独立于 transform）+ translate 来做动画，
+ * 让 content 和 tip 作为一个整体同步动画。
+ */
+.maplibregl-popup {
+  /* 移除默认的 max-width: 240px 限制 */
+  max-width: none !important;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.20)) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.08)) !important;
+}
+
+/* 使用 CSS 变量来同步 content 和 tip 的动画 */
+.maplibregl-popup .maplibregl-popup-content,
+.maplibregl-popup .maplibregl-popup-tip {
+  /* 使用独立的 scale 属性，不影响 tip 的 transform: rotate() */
+  transform-origin: bottom center;
+  will-change: scale, translate, opacity;
+  animation: popup-scale-in 200ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes popup-scale-in {
+  from {
+    opacity: 0;
+    scale: 0.85;
+    translate: 0 8px;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+/* 关闭动画：通过 JS 给 .maplibregl-popup 加 is-closing 类，再延迟 remove() */
+.maplibregl-popup.is-closing .maplibregl-popup-content,
+.maplibregl-popup.is-closing .maplibregl-popup-tip {
+  animation: popup-scale-out 150ms ease-in both !important;
+}
+
+@keyframes popup-scale-out {
+  from {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+  to {
+    opacity: 0;
+    scale: 0.9;
+    translate: 0 6px;
+  }
+}
+
+/* 右下角弹出动画（用于选择菜单、提示弹窗等） */
+@keyframes menu-scale-in {
+  from {
+    opacity: 0;
+    scale: 0.9;
+    translate: 4px 4px;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes menu-scale-out {
+  from {
+    opacity: 1;
+    scale: 1;
+    translate: 0 0;
+  }
+  to {
+    opacity: 0;
+    scale: 0.9;
+    translate: 4px 4px;
+  }
+}
+
+/* 提示弹窗淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maplibregl-popup .maplibregl-popup-content,
+  .maplibregl-popup .maplibregl-popup-tip {
+    animation: none !important;
+  }
+}
+
+/* MapLibre 样式覆盖 */
+.maplibregl-popup-content {
+  display: flex;
+  width: 320px !important;
+  padding: 0px !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--gap-gap-inside-space, 4px) !important;
+  border-radius: var(--border-radius-border-radius-middle) !important;
+  background: var(--box-box-normal-Background-whiteOnly, #FFF) !important;
+  /* BasicShadow/BasicShadow-Level4WithLIne */
+  box-shadow: none !important;
+}
+
+/* 自定义 SVG Tip - 隐藏默认的 CSS border 三角形，使用 SVG 替代 */
+.maplibregl-popup-tip {
+  /* 隐藏默认的 border 三角形 */
+  border: none !important;
+  width: 16px !important;
+  height: 8px !important;
+  /* 使用 inline SVG 作为背景 - 圆润的现代箭头 */
+  /* transform: rotate(180deg) !important; */
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='8' viewBox='0 0 16 8' fill='none'%3E%3Cpath d='M16 0H0C4.12448 0 4.76977 5 8 5C11.2302 5 11.8755 0 16 0Z' fill='white'/%3E%3C/svg%3E") no-repeat center / contain !important;
+}
+
+/* Popup 在上方时（tip 指向下方） */
+.maplibregl-popup-anchor-top .maplibregl-popup-tip,
+.maplibregl-popup-anchor-top-left .maplibregl-popup-tip,
+.maplibregl-popup-anchor-top-right .maplibregl-popup-tip {
+  /* 旋转 180 度让箭头指向下方 */
+  transform: rotate(180deg) !important;
+  transform-origin: center;
+}
+
+/* Popup 在左侧时（tip 指向右侧） */
+.maplibregl-popup-anchor-right .maplibregl-popup-tip {
+  width: 5px !important;
+  height: 16px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='16' viewBox='0 0 5 16' fill='none'%3E%3Cpath d='M0 16V0C0 4.12448 5 4.76977 5 8C5 11.2302 0 11.8755 0 16Z' fill='white'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  transform: none !important;
+}
+
+/* Popup 在右侧时（tip 指向左侧） */
+.maplibregl-popup-anchor-left .maplibregl-popup-tip {
+  width: 5px !important;
+  height: 16px !important;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='5' height='16' viewBox='0 0 5 16' fill='none'%3E%3Cpath d='M5 16V0C5 4.12448 0 4.76977 0 8C0 11.2302 5 11.8755 5 16Z' fill='white'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  transform: none !important;
+}
+
+
+.maplibregl-popup-close-button {
+  font-size: var(--size-size-big) !important;
+  padding: var(--padding-padding-small) !important;
+  top: 8px !important;
+  right: 8px !important;
+  line-height: 0.7em !important;
+  text-box: trim-both ex alphabetic !important;
+  border-radius: 999px !important;
+}
+
+.maplibregl-ctrl.maplibregl-ctrl-group{
+  margin: 100px 10px 0 0 !important;
+}
+
+/* 文章排版样式 */
+.prose {
+  max-width: 65ch;
+  color: var(--neutral-12);
+  line-height: 1.75;
+}
+
+.prose h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--neutral-14);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--neutral-14);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--neutral-3);
+  padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--neutral-14);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose ul,
+.prose ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--neutral-14);
+}
+
+.prose a {
+  color: var(--primary-6);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: var(--primary-8);
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--primary-3);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--neutral-10);
+  font-style: italic;
+}
+
+.prose code {
+  background-color: var(--neutral-2);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: ui-monospace, monospace;
+}
+
+.prose pre {
+  background-color: var(--neutral-16);
+  color: var(--neutral-2);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--neutral-3);
+  margin: 2rem 0;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--neutral-3);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background-color: var(--neutral-2);
+  font-weight: 600;
+}
+
+/* max-w-none 覆盖 */
+.prose.max-w-none {
+  max-width: none;
+}
+
+.plasticEffort{
+}
+
+/* 自定义地图标记样式 */
+.custom-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  z-index: 1;
+  transition: filter 0.2s ease, z-index 0s;
+}
+
+.custom-marker svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.custom-marker:hover {
+  z-index: 10;
+}

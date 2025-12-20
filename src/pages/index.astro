@@ -1,16 +1,25 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import TimeMap from '../components/map/TimeMap';
+import ResearchPanel from '../components/research/ResearchPanel';
+import HeaderControls from '../components/HeaderControls';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="时间地图" fullscreen={true}>
+  <div class="flex h-screen overflow-hidden">
+    <Sidebar />
+    
+    <!-- 地图主区域 -->
+    <main class="flex-1 ml-64 relative h-full">
+      <!-- 头部控制区域 -->
+      <HeaderControls client:load />
+      
+      <!-- 地图容器 -->
+      <TimeMap client:load />
+      
+      <!-- 研究面板（浮窗） -->
+      <ResearchPanel client:load />
+    </main>
+  </div>
+</Layout>
