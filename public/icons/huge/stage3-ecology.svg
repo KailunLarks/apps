@@ -1,0 +1,67 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cleanwater" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#67e8f9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenbank" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="400" height="300" fill="#e0f2fe"/>
+  
+  <!-- 河岸绿带 - 上 -->
+  <path d="M0 80 Q100 70 200 80 Q300 90 400 75 L400 100 Q300 115 200 105 Q100 95 0 105 Z" fill="url(#greenbank)"/>
+  
+  <!-- 海甸溪 - 清洁水体 -->
+  <path d="M0 105 Q100 95 200 105 Q300 115 400 100 L400 180 Q300 195 200 185 Q100 175 0 190 Z" fill="url(#cleanwater)"/>
+  
+  <!-- 河岸绿带 - 下 -->
+  <path d="M0 190 Q100 175 200 185 Q300 195 400 180 L400 220 Q300 235 200 225 Q100 215 0 230 Z" fill="url(#greenbank)"/>
+  
+  <!-- 生态浮岛 -->
+  <ellipse cx="120" cy="145" rx="25" ry="12" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="110" cy="140" r="5" fill="#4ade80"/>
+  <circle cx="125" cy="138" r="6" fill="#4ade80"/>
+  <circle cx="130" cy="145" r="4" fill="#4ade80"/>
+  
+  <ellipse cx="280" cy="150" rx="30" ry="14" fill="#22c55e" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="270" cy="145" r="6" fill="#4ade80"/>
+  <circle cx="285" cy="143" r="7" fill="#4ade80"/>
+  <circle cx="295" cy="150" r="5" fill="#4ade80"/>
+  
+  <!-- 鱼群 -->
+  <g fill="#f97316" opacity="0.7">
+    <ellipse cx="180" cy="140" rx="6" ry="3"/>
+    <ellipse cx="195" cy="145" rx="5" ry="2.5"/>
+    <ellipse cx="205" cy="138" rx="5" ry="2.5"/>
+    <ellipse cx="220" cy="155" rx="6" ry="3"/>
+    <ellipse cx="235" cy="148" rx="5" ry="2.5"/>
+  </g>
+  
+  <!-- 整治措施 -->
+  <rect x="20" y="240" width="360" height="50" rx="8" fill="#fff" stroke="#0891b2" stroke-width="2"/>
+  <text x="200" y="260" text-anchor="middle" fill="#0e7490" font-size="10" font-weight="bold">海甸溪综合整治措施</text>
+  <text x="80" y="278" text-anchor="middle" fill="#155e75" font-size="9">截污纳管</text>
+  <text x="160" y="278" text-anchor="middle" fill="#155e75" font-size="9">清淤疏浚</text>
+  <text x="240" y="278" text-anchor="middle" fill="#155e75" font-size="9">生态修复</text>
+  <text x="320" y="278" text-anchor="middle" fill="#155e75" font-size="9">景观提升</text>
+  
+  <!-- 对比标签 -->
+  <rect x="20" y="15" width="80" height="30" rx="5" fill="#fecaca"/>
+  <text x="60" y="35" text-anchor="middle" fill="#991b1b" font-size="10">过去:臭水沟</text>
+  
+  <rect x="300" y="15" width="80" height="30" rx="5" fill="#bbf7d0"/>
+  <text x="340" y="35" text-anchor="middle" fill="#166534" font-size="10">现在:绿带</text>
+  
+  <!-- 箭头 -->
+  <path d="M110 30 L290 30" stroke="#6b7280" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="285,25 295,30 285,35" fill="#6b7280"/>
+  <text x="200" y="25" text-anchor="middle" fill="#4b5563" font-size="9">生态转型</text>
+  
+  <!-- 标题 -->
+  <text x="200" y="65" text-anchor="middle" fill="#0e7490" font-size="14" font-weight="bold">人水和谐的城市滨水绿带</text>
+</svg>

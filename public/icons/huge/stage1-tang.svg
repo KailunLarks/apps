@@ -1,0 +1,40 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fcd34d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景海水 -->
+  <rect width="400" height="300" fill="url(#water)"/>
+  
+  <!-- 波浪纹理 -->
+  <path d="M0 150 Q50 140 100 150 T200 150 T300 150 T400 150 L400 300 L0 300 Z" fill="#3b82f6" opacity="0.3"/>
+  <path d="M0 180 Q50 170 100 180 T200 180 T300 180 T400 180 L400 300 L0 300 Z" fill="#2563eb" opacity="0.3"/>
+  
+  <!-- 散落的沙洲 - 海田岛雏形 -->
+  <ellipse cx="150" cy="140" rx="35" ry="20" fill="url(#sand)" opacity="0.8"/>
+  <ellipse cx="200" cy="170" rx="25" ry="15" fill="url(#sand)" opacity="0.7"/>
+  <ellipse cx="250" cy="130" rx="30" ry="18" fill="url(#sand)" opacity="0.8"/>
+  
+  <!-- 白沙门岛雏形 -->
+  <ellipse cx="300" cy="100" rx="28" ry="16" fill="url(#sand)" opacity="0.75"/>
+  
+  <!-- 南渡江入海口方向指示 -->
+  <path d="M50 80 L120 120" stroke="#1e40af" stroke-width="3" stroke-dasharray="8,4" opacity="0.6"/>
+  <polygon points="120,120 110,115 112,125" fill="#1e40af" opacity="0.6"/>
+  
+  <!-- 文字标注 -->
+  <text x="150" y="120" text-anchor="middle" fill="#92400e" font-size="10" font-weight="bold">海田岛</text>
+  <text x="300" y="85" text-anchor="middle" fill="#92400e" font-size="10" font-weight="bold">白沙门岛</text>
+  <text x="70" y="70" text-anchor="middle" fill="#1e40af" font-size="9">南渡江</text>
+  
+  <!-- 标题 -->
+  <text x="200" y="30" text-anchor="middle" fill="#1e3a8a" font-size="16" font-weight="bold">唐代：沙洲形成期</text>
+  <text x="200" y="280" text-anchor="middle" fill="#1e3a8a" font-size="11">泥沙沉积形成零散沙洲，形态不稳定</text>
+</svg>

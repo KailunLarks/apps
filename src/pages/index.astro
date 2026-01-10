@@ -1,25 +1,29 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Sidebar from '../components/Sidebar.astro';
+// import Sidebar from '../components/Sidebar.astro';
 import TimeMap from '../components/map/TimeMap';
 import ResearchPanel from '../components/research/ResearchPanel';
+import SvgPlayer from '../components/map/SvgPlayer';
 import HeaderControls from '../components/HeaderControls';
 ---
 
 <Layout title="时间地图" fullscreen={true}>
   <div class="flex h-screen overflow-hidden">
-    <Sidebar />
+    {/* <Sidebar /> */}
     
     <!-- 地图主区域 -->
-    <main class="flex-1 ml-64 relative h-full">
-      <!-- 头部控制区域 -->
-      <HeaderControls client:load />
-      
-      <!-- 地图容器 -->
+    <main class="flex-1 relative h-full">
+      <!-- 地图容器 - 始终全屏 -->
       <TimeMap client:load />
       
-      <!-- 研究面板（浮窗） -->
+      <!-- 研究面板（浮窗侧栏） -->
       <ResearchPanel client:load />
+      
+      <!-- SVG 动画播放器 -->
+      <SvgPlayer client:load />
+      
+      <!-- 头部控制区域 -->
+      {/* <HeaderControls client:load /> */}
     </main>
   </div>
 </Layout>

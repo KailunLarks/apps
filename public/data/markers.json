@@ -8,7 +8,8 @@
         "name": "海甸溪",
         "researchId": "haidian-creek",
         "description": "海甸溪沿岸区域",
-        "icon": "stream.svg",
+        "icon": "HaidianRiver.svg",
+        "popupSvg": "huge/HaidianRiver.svg",
         "timeRange": [
           2000,
           2024
@@ -30,6 +31,7 @@
         "researchId": "baishamen-park",
         "description": "白沙门休闲区",
         "icon": "park.svg",
+        "popupSvg": "park.svg",
         "timeRange": [
           2008,
           2024
@@ -50,7 +52,8 @@
         "name": "世纪大桥",
         "researchId": "century-bridge",
         "description": "连接海甸岛与主城区",
-        "icon": "bridge.svg",
+        "icon": "centuryBridge.svg",
+        "popupSvg": "huge/centuryBridge.svg",
         "timeRange": [
           2003,
           2024
@@ -72,6 +75,7 @@
         "researchId": "hainan-university",
         "description": "海南大学校园",
         "icon": "HNU.svg",
+        "popupSvg": "huge/HNU.svg",
         "timeRange": [
           1983,
           2024
@@ -93,6 +97,7 @@
         "researchId": "haidian-island",
         "description": "海甸岛整体范围",
         "icon": "island.svg",
+        "popupSvg": "island.svg",
         "timeRange": [
           1995,
           2024
@@ -114,6 +119,7 @@
         "type": "bridge",
         "description": "连接海甸岛与主城区的桥梁",
         "icon": "bridge.svg",
+        "popupSvg": "bridge.svg",
         "researchId": "renmin-bridge"
       },
       "geometry": {
@@ -131,6 +137,7 @@
             "type": "bridge",
             "description": "连接海甸岛与主城区的桥梁",
             "icon": "bridge.svg",
+            "popupSvg": "bridge.svg",
             "researchId": "heping-bridge"
         },
         "geometry": {
@@ -140,6 +147,135 @@
           ],
           "type": "Point"
         }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "仁心寺",
+            "type": "building",
+            "description": "「一寺八庙」中的仁心寺",
+            "researchId": "one-temple-eight-well"
+        },
+        "geometry": {
+          "coordinates": [
+            110.33565411091746,
+            20.048152278827942
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "一庙",
+            "type": "building",
+            "description": "「一寺八庙」中的一庙",
+            "researchId": "one-temple-eight-well1"
+        },
+        "geometry": {
+          "coordinates": [
+            110.34828015002114,
+            20.052497055252147
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "二庙",
+            "type": "building",
+            "description": "「一寺八庙」中的二庙",
+            "researchId": "one-temple-eight-well2"
+        },
+        "geometry": {
+          "coordinates": [
+            110.34866023696964,
+            20.050531006894033
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "三庙",
+            "type": "building",
+            "description": "「一寺八庙」中的三庙",
+            "researchId": "one-temple-eight-well3"
+        },
+        "geometry": {
+          "coordinates": [
+            110.34642068509913,
+            20.05108345776965
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "四庙",
+            "type": "building",
+            "description": "「一寺八庙」中的四庙",
+            "researchId": "one-temple-eight-well4"
+        },
+        "geometry": {
+          "coordinates": [
+            110.34510354075394,
+            20.051811045805167
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "五庙",
+            "type": "building",
+            "description": "「一寺八庙」中的五庙",
+            "researchId": "one-temple-eight-well5"
+        },
+        "geometry": {
+          "coordinates": [
+            110.3431869337071,
+            20.050429146858292
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "六庙",
+            "type": "building",
+            "description": "「一寺八庙」中的六庙",
+            "researchId": "one-temple-eight-well6"
+        },
+        "geometry": {
+          "coordinates": [
+              110.34117328256508,
+              20.049821548508774
+          ],
+          "type": "Point"
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+            "name": "东坡老码头风情商业街",
+            "type": "building",
+            "description": "海甸溪北岸打造「东坡老码头风情商业街」（投资近10亿元），发展夜经济",
+            "researchId": "east-cost-road"
+        },
+        "geometry": {
+          "coordinates": [
+            110.32626160963679,
+            20.052420983212272
+          ],
+          "type": "Point"
+        }
       }
+
     ]
   }

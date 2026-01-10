@@ -1,0 +1,44 @@
+<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="water2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="land" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#86efac;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景海水 -->
+  <rect width="400" height="300" fill="url(#water2)"/>
+  
+  <!-- 波浪 -->
+  <path d="M0 200 Q50 190 100 200 T200 200 T300 200 T400 200 L400 300 L0 300 Z" fill="#3b82f6" opacity="0.3"/>
+  
+  <!-- 逐渐连接的岛屿群 -->
+  <path d="M120 100 Q150 90 180 100 Q200 110 220 100 Q250 85 280 95 Q310 105 320 120 Q300 140 270 145 Q240 150 210 145 Q180 140 150 145 Q120 150 110 135 Q105 115 120 100 Z" fill="url(#land)" opacity="0.9"/>
+  
+  <!-- 白沙门区域 -->
+  <ellipse cx="310" cy="90" rx="35" ry="22" fill="url(#land)" opacity="0.85"/>
+  
+  <!-- 小岛屿连接线（虚线表示即将合并） -->
+  <path d="M280 105 Q295 95 305 95" stroke="#166534" stroke-width="2" stroke-dasharray="4,3" fill="none"/>
+  
+  <!-- 水道标识 -->
+  <path d="M200 130 L200 170" stroke="#2563eb" stroke-width="2" opacity="0.5"/>
+  <text x="210" y="155" fill="#1e40af" font-size="8">水道</text>
+  
+  <!-- 文字标注 -->
+  <text x="180" y="85" text-anchor="middle" fill="#166534" font-size="11" font-weight="bold">群岛格局</text>
+  <text x="310" y="75" text-anchor="middle" fill="#166534" font-size="10">白沙门</text>
+  
+  <!-- 《琼台志》引用 -->
+  <rect x="30" y="220" width="150" height="50" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="105" y="240" text-anchor="middle" fill="#92400e" font-size="9">《琼台志》载：</text>
+  <text x="105" y="255" text-anchor="middle" fill="#92400e" font-size="10" font-weight="bold">"有海岛五"</text>
+  
+  <!-- 标题 -->
+  <text x="200" y="30" text-anchor="middle" fill="#1e3a8a" font-size="16" font-weight="bold">明代：群岛格局形成</text>
+  <text x="200" y="280" text-anchor="middle" fill="#1e3a8a" font-size="11">沙洲靠拢连缀，岛屿轮廓初步显现</text>
+</svg>

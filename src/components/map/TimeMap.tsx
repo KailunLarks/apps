@@ -18,7 +18,7 @@ const MAP_COLORS = {
 };
 
 // 地图样式配置
-type MapStyleKey = 'amap' | 'amap-satellite';
+type MapStyleKey = 'amap' | 'amap-no-labels' | 'amap-satellite';
 
 interface MapStyleConfig {
   name: string;
@@ -35,6 +35,17 @@ const MAP_STYLES: Record<MapStyleKey, MapStyleConfig> = {
       'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
       'https://webrd03.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
       'https://webrd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}'
+    ],
+    attribution: '&copy; 高德地图',
+    maxzoom: 18
+  },
+  'amap-no-labels': {
+    name: '高德无标签',
+    tiles: [
+      'https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&ltype=1&x={x}&y={y}&z={z}',
+      'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&ltype=1&x={x}&y={y}&z={z}',
+      'https://webrd03.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&ltype=1&x={x}&y={y}&z={z}',
+      'https://webrd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&ltype=1&x={x}&y={y}&z={z}'
     ],
     attribution: '&copy; 高德地图',
     maxzoom: 18
@@ -82,7 +93,7 @@ const createMapStyle = (styleKey: MapStyleKey): maplibregl.StyleSpecification =>
 export default function TimeMap() {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
-  const { setMap } = useMapStore();
+  const { setMap, setMarkers } = useMapStore();
   const [isLoaded, setIsLoaded] = useState(false);
   const [currentStyle, setCurrentStyle] = useState<MapStyleKey>('amap-satellite');
   const [showStylePicker, setShowStylePicker] = useState(false);
@@ -145,6 +156,15 @@ export default function TimeMap() {
       const markersData = geoJSONToGcj02(markersDataRaw);
       // 缓存 markers 数据，供区域 click 时查找关联 marker
       markersDataRef.current = markersData;
+
+      // 将 markers 转换并存入 store，供 flyToMarker 等功能使用
+      const markersForStore = markersData.features.map((feature: any) => ({
+        id: feature.id,
+        title: feature.properties?.name || '',
+        coordinates: feature.geometry.coordinates as [number, number],
+        researchId: feature.properties?.researchId || null,
+      }));
+      setMarkers(markersForStore);
 
       // 收集所有唯一的图标名称并预加载，同时更新 GeoJSON 数据
       const iconNames = new Set<string>();
@@ -271,24 +291,33 @@ export default function TimeMap() {
 
           const feature = e.features[0];
           const coordinates = (feature.geometry as any).coordinates.slice();
-          const { name, description, researchId, icon } = feature.properties || {};
+          const { name, description, researchId, icon, popupSvg } = feature.properties || {};
 
-          // 构建图标 HTML
+          // 构建图标 HTML（小图标）
           const iconHtml = icon 
             ? `<img src="/icons/${icon}" alt="${name}" class="w-10 h-10 object-contain flex-shrink-0" />`
+            : '';
+
+          // 构建大SVG图片 HTML
+          const popupSvgHtml = popupSvg
+            ? `<div class="mt-0 mb-0 flex justify-center w-full rounded-t-[8px] overflow-hidden">
+                 <img src="/icons/${popupSvg}" alt="${name} 大图" class="w-full h-32 object-contain" />
+               </div>`
             : '';
 
           // 创建弹窗
           const popup = new maplibregl.Popup({ offset: 15 })
             .setLngLat(coordinates)
             .setHTML(`
-              <div class="p-4 w-full">
-                <div class="flex items-center gap-3 mb-2">
-                  ${iconHtml}
-                  <h3 class="m-0 text-xl font-semibold text-gray-700">${name}</h3>
+              <div class=" w-full">
+                ${popupSvgHtml}
+                <div class="p-4">
+                  <div class="flex items-center gap-3 mb-2">
+
+                    <h3 class="m-0 text-xl font-semibold text-gray-700">${name}</h3>
+                  </div>
+                  <p class="m-0 mb-1 text-base text-gray-500">${description || ''}</p>
                 </div>
-                <p class="m-0 mb-1 text-base text-gray-500">${description || ''}</p>
-                ${researchId ? `<a href="/research/${researchId}" class="text-orange-500 text-sm hover:text-orange-600">查看研究 →</a>` : ''}
               </div>
             `)
             .addTo(map.current!);
@@ -415,7 +444,7 @@ export default function TimeMap() {
       if (bindEvents && !areasBindedRef.current) {
         areasBindedRef.current = true;
 
-        // 点击区域事件
+        // 点击区域事件 - 直接弹出关联 marker 的弹窗
         map.current.on('click', 'areas-fill', (e) => {
           if (!e.features?.length) return;
           // 检查是否同时点击到了 marker，如果是则不处理（让 marker 的事件处理）
@@ -445,48 +474,52 @@ export default function TimeMap() {
           const minFeature = e.features.reduce((min, cur) => getPolygonArea(cur) < getPolygonArea(min) ? cur : min, e.features[0]);
           const areaProps = minFeature.properties || {};
           const areaId = areaProps.id;
-          const coordinates = e.lngLat;
 
           // 从缓存的 markersDataRef 中查找关联的 marker（通过 researchId 匹配区域 id）
-          let markerProps: any = null;
+          let linkedMarker: any = null;
           if (markersDataRef.current && areaId) {
-            const linkedMarker = markersDataRef.current.features?.find((f: any) => f.properties?.researchId === areaId);
-            if (linkedMarker) markerProps = linkedMarker.properties;
+            linkedMarker = markersDataRef.current.features?.find((f: any) => f.properties?.researchId === areaId);
           }
 
-          // 使用关联 marker 的属性，如果没有则使用区域自身的属性
-          const name = markerProps?.name || areaProps.name || '未命名区域';
-          const description = markerProps?.description || areaProps.description || '';
-          const icon = markerProps?.icon;
-          const researchId = markerProps?.researchId || areaId;
+          // 如果找到关联的 marker，使用 marker 的坐标和属性弹出与 marker 一致的弹窗
+          if (linkedMarker) {
+            const markerCoordinates = linkedMarker.geometry.coordinates.slice();
+            const { name, description, researchId, icon, popupSvg } = linkedMarker.properties || {};
 
-          // 构建图标 HTML（与 marker popup 一致）
-          const iconHtml = icon 
-            ? `<img src="/icons/${icon}" alt="${name}" class="w-10 h-10 object-contain flex-shrink-0" />`
-            : '';
+            // 构建大SVG图片 HTML（与 marker 弹窗一致）
+            const popupSvgHtml = popupSvg
+              ? `<div class="mt-0 mb-0 flex justify-center w-full rounded-t-[8px] overflow-hidden">
+                   <img src="/icons/${popupSvg}" alt="${name} 大图" class="w-full h-32 object-contain" />
+                 </div>`
+              : '';
 
-          const popup = new maplibregl.Popup({ offset: 15 })
-            .setLngLat(coordinates)
-            .setHTML(`
-              <div class="p-4 w-full">
-                <div class="flex items-center gap-3 mb-2">
-                  ${iconHtml}
-                  <h3 class="m-0 text-xl font-semibold text-gray-700">${name}</h3>
+            const popup = new maplibregl.Popup({ offset: 15 })
+              .setLngLat(markerCoordinates)
+              .setHTML(`
+                <div class=" w-full">
+                  ${popupSvgHtml}
+                  <div class="p-4">
+                    <div class="flex items-center gap-3 mb-2">
+
+                      <h3 class="m-0 text-xl font-semibold text-gray-700">${name}</h3>
+                    </div>
+                    <p class="m-0 mb-1 text-base text-gray-500">${description || ''}</p>
+                    ${researchId ? `<a href="/research/${researchId}" class="text-orange-500 text-sm hover:text-orange-600">查看研究 →</a>` : ''}
+                  </div>
                 </div>
-                <p class="m-0 mb-1 text-base text-gray-500">${description}</p>
-                ${researchId ? `<a href="/research/${researchId}" class="text-orange-500 text-sm hover:text-orange-600">查看研究 →</a>` : ''}
-              </div>
-            `)
-            .addTo(map.current!);
-          const popupEl = popup.getElement();
-          const originalRemove = popup.remove.bind(popup);
-          popup.remove = () => {
-            popupEl.classList.add('is-closing');
-            setTimeout(() => {
-              originalRemove();
-            }, 150);
-            return popup;
-          };
+              `)
+              .addTo(map.current!);
+
+            const popupEl = popup.getElement();
+            const originalRemove = popup.remove.bind(popup);
+            popup.remove = () => {
+              popupEl.classList.add('is-closing');
+              setTimeout(() => {
+                originalRemove();
+              }, 150);
+              return popup;
+            };
+          }
         });
 
         // 鼠标悬停效果 - 使用 mousemove 更可靠处理重叠区域
