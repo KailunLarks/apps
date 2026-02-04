@@ -25,6 +25,7 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@types/maplibre-gl": "^1.13.2"
+    "@types/maplibre-gl": "^1.13.2",
+    "wrangler": "^4.62.0"
   }
 }
