@@ -17,5 +17,8 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
+  site: 'https://KailunLarks.github.io',
+  base: '/apps',
+  
   adapter: cloudflare()
 });
